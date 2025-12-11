@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mamatha's Chaos Portfolio</title>
+    <style>
+        /* --- CSS STYLES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Patrick+Hand&display=swap');
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #feca57;
+            --accent: #48dbfb;
+            --text: #2d3436;
+            --bg: #f7f1e3;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Patrick Hand', cursive;
+            background-color: var(--bg);
+            background-image: radial-gradient(#d1ccc0 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--text);
+            box-shadow: 10px 10px 0px var(--text);
+            margin-bottom: 50px;
+            transform: rotate(-1deg);
+        }
+
+        h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0px var(--text);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            background: var(--secondary);
+            color: var(--text);
+            display: inline-block;
+            padding: 5px 15px;
+            margin-top: 10px;
+            border: 2px solid var(--text);
+            transform: rotate(2deg);
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        }
+
+        /* Section Styling */
+        section {
+            background: var(--card-bg);
+            border: 3px solid var(--text);
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Comic Neue', cursive;
+            color: var(--primary);
+            font-size: 2.2rem;
+            border-bottom: 3px dashed var(--secondary);
+            display: inline-block;
+            margin-top: 0;
+        }
+
+        button {
+            background: var(--primary);
+            border: 3px solid var(--text);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-family: 'Comic Neue', cursive;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--text);
+            transition: all 0.1s;
+            margin: 5px;
+        }
+
+        button:active {
+            box-shadow: 0px 0px 0px var(--text);
+            transform: translate(4px, 4px);
+        }
+
+        /* --- GAME 1: WHACK A DISTRACTION --- */
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            width: 320px;
+            margin: 0 auto;
+        }
+        .hole {
+            flex: 1 0 30%;
+            height: 100px;
+            background: #eee;
+            border: 2px solid var(--text);
+            border-radius: 50%;
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .mole {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg'); /* Netflix Icon */
+            background-size: 70%;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: 100%;
+            transition: top 0.1s;
+        }
+        .hole.up .mole {
+            top: 0;
+        }
+
+        /* --- GAME 2: EXCUSE GENERATOR --- */
+        #excuse-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d63031;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffeaa7;
+            border: 2px dashed var(--text);
+            margin: 20px 0;
+            padding: 10px;
+            transform: rotate(-1deg);
+        }
+
+        /* --- GAME 3: CATCH THE TOOTH --- */
+        #game-area {
+            width: 100%;
+            height: 250px;
+            background-color: #dfe6e9;
+            position: relative;
+            border: 3px solid var(--text);
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        #tooth-target {
+            font-size: 40px;
+            position: absolute;
+            cursor: pointer;
+            user-select: none;
+            transition: top 0.3s, left 0.3s;
+        }
+
+        /* --- STRESS METER --- */
+        .meter-container {
+            width: 80%;
+            height: 30px;
+            background: #ddd;
+            border: 3px solid var(--text);
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .meter-fill {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, #f1c40f, #e74c3c);
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .polaroid {
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            width: 200px;
+            transition: transform 0.3s;
+        }
+        .polaroid:hover { transform: scale(1.1) rotate(2deg); z-index: 5; }
+        .polaroid img { width: 100%; border: 1px solid #ddd; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Mamatha Rani Torlapati</h1>
+        <div class="subtitle">🦷 Dentist by Day, Clown by Night 🤡</div>
+    </header>
+
+    <section id="music">
+        <h2>🎵 The Mandatory Soundtrack</h2>
+        <div style="background: var(--accent); padding: 20px; border-radius: 10px; border: 2px solid black;">
+            <p><strong>Now Playing:</strong> Shape of You (On repeat. Forever.)</p>
+            <audio id="audioPlayer" loop>
+                <source src="shape_of_you.mp3" type="audio/mpeg">
+            </audio>
+            <button onclick="playMusic()">▶ START PARTY</button>
+            <button onclick="stopMusic()" style="background:#ff7675;">⏹ STOP PLEASE</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>🎤 The Ted Talk of Suffering</h2>
+        <p style="font-size: 1.2rem; text-align: left; line-height: 1.6;">
+            Hi, I’m <strong>Mamatha Rani Torlapati</strong>. <br><br>
+            I was born in <strong>Rajahmundry</strong>, and since then, I have been making it everyone else's problem.
+            I have a mom, a dad, and a sister who is... negotiable. <br><br>
+            I am the <strong>CEO of Bad Decisions</strong>. I took BiPC, stressed like crazy, took 2 gap years, and finally destiny threw me into <strong>GSL Dental College</strong>. 
+            Now I spend my days looking into people's mouths and wondering where it all went wrong.
+        </p>
+    </section>
+
+    <section id="excuses">
+        <h2>🤥 The "Why I'm Late" Generator</h2>
+        <p>Too lazy to think of a lie? Click the button.</p>
+        
+        <div id="excuse-display">Generate an excuse...</div>
+        
+        <button onclick="generateExcuse()">🎲 New Excuse</button>
+    </section>
+
+    <section id="whack-game">
+        <h2>🔨 Smash The Distraction!</h2>
+        <p>I need to study for Dental exams, but Netflix keeps popping up! <br><strong>Smash the Netflix icon to help me focus!</strong></p>
+        
+        <h3 style="margin:5px;">Score: <span id="whack-score">0</span></h3>
+        
+        <div class="grid">
+            <div class="hole" id="hole1"><div class="mole" onclick="bonk(event)"></div></div>
+            <div class="hole" id="hole2"><div class="mole" onclick="bonk(event)"></div></div>
+            <div class="hole" id="hole3"><div class="mole" onclick="bonk(event)"></div></div>
+            <div class="hole" id="hole4"><div class="mole" onclick="bonk(event)"></div></div>
+            <div class="hole" id="hole5"><div class="mole" onclick="bonk(event)"></div></div>
+            <div class="hole" id="hole6"><div class="mole" onclick="bonk(event)"></div></div>
+        </div>
+        <br>
+        <button onclick="startWhackGame()">🔴 Start Game</button>
+    </section>
+
+    <section id="catch-game">
+        <h2>🦷 Catch The Runaway Tooth</h2>
+        <p>Patients are scary. Their teeth are scarier. Catch it!</p>
+        <div style="font-size:1.5rem; font-weight:bold; margin-bottom:10px;">Caught: <span id="tooth-score">0</span></div>
+        
+        <div id="game-area">
+            <div id="tooth-target" onclick="catchTooth()">🦷</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>🤯 Mamatha's Stress Meter</h2>
+        <p>Click to check my current stress level.</p>
+        <div class="meter-container">
+            <div class="meter-fill" id="stress-bar"></div>
+        </div>
+        <p id="stress-text" style="font-weight:bold;">Status: Chill (Just kidding)</p>
+        <button onclick="checkStress()">⚠️ Check Stress</button>
+    </section>
+
+    <section>
+        <h2>📸 The Hall of Shame</h2>
+        <div class="gallery">
+            <div class="polaroid">
+                <img src="https://placehold.co/200x200/ff9f43/white?text=Crazy+Me" alt="Funny 1">
+                <div style="padding-top:10px; font-weight:bold;">CEO of Sleep</div>
+            </div>
+            <div class="polaroid">
+                <img src="https://placehold.co/200x200/54a0ff/white?text=Dentist+Mode" alt="Funny 2">
+                <div style="padding-top:10px; font-weight:bold;">"Trust Me, I'm a Dr"</div>
+            </div>
+            <div class="polaroid">
+                <img src="https://placehold.co/200x200/ee5253/white?text=Panic+Mode" alt="Funny 3">
+                <div style="padding-top:10px; font-weight:bold;">Exam Tomorrow?!</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Mamatha. "Brain has 2GB RAM, please be patient."</p>
+    </footer>
+
+</div>
+
+<script>
+    /* --- LOGIC FOR ALL THE MADNESS --- */
+
+    // 1. MUSIC PLAYER
+    var audio = document.getElementById("audioPlayer");
+    function playMusic() {
+        audio.play();
+        document.body.style.animation = "shake 0.5s infinite"; // The whole page dances
+    }
+    function stopMusic() {
+        audio.pause();
+        audio.currentTime = 0;
+        document.body.style.animation = "none";
+    }
+    // Simple shake animation in CSS
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
+
+    // 2. EXCUSE GENERATOR
+    const excuses = [
+        "My dog ate my dental kit.",
+        "I got lost in my own house.",
+        "The stars weren't aligned today.",
+        "I was busy watching Netflix... for research.",
+        "A zombie apocalypse started, but only in my room.",
+        "I forgot I was supposed to be somewhere.",
+        "My Nokia phone ran out of battery (somehow)."
+    ];
+    function generateExcuse() {
+        const randomIndex = Math.floor(Math.random() * excuses.length);
+        document.getElementById("excuse-display").innerText = excuses[randomIndex];
+    }
+
+
+    // 3. WHACK-A-DISTRACTION GAME
+    const holes = document.querySelectorAll('.hole');
+    const scoreBoard = document.getElementById('whack-score');
+    let lastHole;
+    let timeUp = false;
+    let whackScore = 0;
+
+    function randomTime(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+
+    function randomHole(holes) {
+        const idx = Math.floor(Math.random() * holes.length);
+        const hole = holes[idx];
+        if (hole === lastHole) return randomHole(holes);
+        lastHole = hole;
+        return hole;
+    }
+
+    function peep() {
+        const time = randomTime(500, 1000);
+        const hole = randomHole(holes);
+        hole.classList.add('up');
+        setTimeout(() => {
+            hole.classList.remove('up');
+            if (!timeUp) peep();
+        }, time);
+    }
+
+    function startWhackGame() {
+        scoreBoard.textContent = 0;
+        whackScore = 0;
+        timeUp = false;
+        peep();
+        setTimeout(() => timeUp = true, 10000); // Game lasts 10 seconds
+        alert("Get ready! Smash Netflix to save your GPA! You have 10 seconds.");
+    }
+
+    function bonk(e) {
+        if(!e.isTrusted) return; // Cheater detection
+        whackScore++;
+        e.target.parentNode.classList.remove('up');
+        scoreBoard.textContent = whackScore;
+    }
+
+
+    // 4. CATCH THE TOOTH
+    let toothScore = 0;
+    const toothTarget = document.getElementById("tooth-target");
+    const gameArea = document.getElementById("game-area");
+
+    function moveTooth() {
+        let x = Math.random() * (gameArea.clientWidth - 50);
+        let y = Math.random() * (gameArea.clientHeight - 50);
+        toothTarget.style.left = x + 'px';
+        toothTarget.style.top = y + 'px';
+    }
+    
+    function catchTooth() {
+        toothScore++;
+        document.getElementById("tooth-score").innerText = toothScore;
+        moveTooth();
+    }
+    // Move automatically every 800ms
+    setInterval(moveTooth, 800);
+
+
+    // 5. STRESS METER
+    function checkStress() {
+        const bar = document.getElementById("stress-bar");
+        const txt = document.getElementById("stress-text");
+        
+        // Always goes to 100% or more
+        let stress = 100;
+        bar.style.width = stress + "%";
+        bar.style.background = "red";
+        txt.innerText = "Status: PANIC MODE ACTIVATED (1000% Stress)";
+        txt.style.color = "red";
+        
+        // Shake the button
+        setTimeout(() => {
+             alert("System Overload! Too much stress detected! Go sleep!");
+        }, 500);
+    }
+
+</script>
+
+</body>
+</html>
